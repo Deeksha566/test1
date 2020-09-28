@@ -1,0 +1,52 @@
+import re
+f = open("sample_input.txt", "r")
+x1=f.read()
+x=re.split(": |\n",x1)
+key,val,lst=[],[],[]
+dic={}
+n=4
+for i in x:
+  try:
+    key.append(int(i))
+  except:
+    val.append(i)
+for i in range(len(val)):
+  dic[val[i]]=key[i]
+dic=({k: v for k, v in sorted(dic.items(), key=lambda item: item[1])})
+for i in dic.values():
+  lst.append(i)
+lst.sort(reverse=True)
+k1=0
+k2=0
+low=100000000000000000
+for i in range(len(lst)):
+  try:
+    v1=lst[i]
+    v2=lst[i+(n-1)]
+    diff=v1-v2
+    if diff<low:
+      low=diff
+      k1=v1
+      k2=v2
+    else:
+      pass
+  except:
+    break
+demo={}
+for i in dic.items():
+  if i[1]>=k2 and i[1]<=k1:
+    demo[i[0]]=i[1]
+print('Here the goodies that are selected for distribution are:\n')
+str=[]
+for i in demo.items():
+  str.append(f'{i[0]}: {i[1]}')
+with open("sample_output.txt","a") as fs:
+  fs.write(f'Number of the employees: {n}\n')
+  fs.write(f'Here the goodies that are selected for distribution are:\n')
+for i in str:
+  print(i)
+  with open("sample_output.txt","a") as fs:
+    fs.write(f'{i}\n')
+with open("sample_output.txt","a") as fs:
+  fs.write(f'And the difference between the chosen goodie with highest price and the lowest price is {low}\n')
+print(f'And the difference between the chosen goodie with highest price and the lowest price is {low}\n')
